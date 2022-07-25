@@ -22,9 +22,17 @@ const GET_USERS_QUERY = gql`
   }
 `;
 
-export function useGetUsers() {
-  return useQuery('get-users', async () => {
-    const { users } = await graphQLClient.request(GET_USERS_QUERY);
-    return users;
-  });
+function useRequest() {
+  function useGetUsers() {
+    return useQuery('get-users', async () => {
+      const { users } = await graphQLClient.request(GET_USERS_QUERY);
+      return users;
+    });
+  }
+
+  return {
+    useGetUsers,
+  };
 }
+
+export default useRequest;
