@@ -1,5 +1,6 @@
 import { useQuery } from 'react-query';
-import { GraphQLClient, gql } from 'graphql-request';
+import { GraphQLClient } from 'graphql-request';
+import { GET_USERS_QUERY } from '../queries/users_react_query';
 
 const API_URL = `http://localhost:4000`;
 
@@ -8,19 +9,6 @@ const graphQLClient = new GraphQLClient(API_URL, {
     'Content-Type': 'application/json',
   },
 });
-
-const GET_USERS_QUERY = gql`
-  query {
-    users {
-      id
-      name
-      email
-      phone
-      password
-      avatar
-    }
-  }
-`;
 
 function useRequest() {
   function useGetUsers() {

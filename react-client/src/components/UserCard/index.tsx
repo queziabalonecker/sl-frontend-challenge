@@ -10,7 +10,11 @@ type Props = {
 };
 
 function UserCard(props: Props) {
-  return <div className='user-card'></div>;
+  return (
+    <div className='user-card'>
+      <li>{props.user.name}</li>
+    </div>
+  );
 }
 
 export default UserCard;
