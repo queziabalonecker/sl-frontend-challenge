@@ -1,4 +1,5 @@
 import React from 'react';
+import './styles.css';
 import {
   RelayEnvironmentProvider,
   loadQuery,
@@ -16,10 +17,16 @@ function App(props: any) {
   const data = usePreloadedQuery(USERS_RELAY_QUERY, props.preloadedQuery);
 
   return (
-    <div className='App'>
-      {data.users.map((user: User) => {
-        return <UserCard user={user}></UserCard>;
-      })}
+    <div className='container-home'>
+      <div className='container-users'>
+        {data.users.map((user: User) => {
+          return (
+            <div className='user-card' key={user.id}>
+              <UserCard user={user}></UserCard>
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 }

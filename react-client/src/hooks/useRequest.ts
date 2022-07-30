@@ -10,6 +10,7 @@ const graphQLClient = new GraphQLClient(API_URL, {
   },
 });
 
+//hook to fetch data using react-query
 function useRequest() {
   function useGetUsers() {
     return useQuery('get-users', async () => {

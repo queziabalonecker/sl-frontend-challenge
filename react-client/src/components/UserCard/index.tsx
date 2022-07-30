@@ -37,7 +37,7 @@ export default function UserCard({ user }: { user: User }) {
   };
 
   return (
-    <Card key={user.id} sx={{ maxWidth: 345 }}>
+    <Card sx={{ maxWidth: 345 }}>
       <CardHeader
         avatar={
           <Avatar sx={{ bgcolor: red[500] }} aria-label='recipe'>
