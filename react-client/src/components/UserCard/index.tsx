@@ -1,18 +1,9 @@
-type Props = {
-  user: {
-    id: string;
-    name: string;
-    email: string;
-    phone: string;
-    password: string;
-    avatar: string;
-  };
-};
+import { User } from '../../types/User';
 
-function UserCard(props: Props) {
+function UserCard({ user }: { user: User }) {
   return (
     <div className='user-card'>
-      <li>{props.user.name}</li>
+      <li>{user.name}</li>
     </div>
   );
 }

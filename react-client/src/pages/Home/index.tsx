@@ -1,40 +1,36 @@
-import './index.css';
-import useRequest from '../../hooks/useRequest';
-import { useEffect, useState } from 'react';
+import React from 'react';
+import {
+  RelayEnvironmentProvider,
+  loadQuery,
+  usePreloadedQuery,
+} from 'react-relay/hooks';
+import RelayEnvironment from '../../relay/RelayEnvironment';
+import { USERS_RELAY_QUERY } from '../../queries/users_relay_query';
 import UserCard from '../../components/UserCard';
+import { User } from '../../types/User';
 
-type User = {
-  id: string;
-  name: string;
-  email: string;
-  phone: string;
-  password: string;
-  avatar: string;
-};
+const { Suspense } = React;
+const preloadedQuery = loadQuery(RelayEnvironment, USERS_RELAY_QUERY, {});
 
-function Home() {
-  const { useGetUsers } = useRequest();
-  const [users, setUsers] = useState(Array<User>)
-
-  //fetching data with react-query
-  const isFetched = useGetUsers().isFetched;
-  const { data } = useGetUsers();
-  useEffect(() => {
-    if (isFetched) {
-      setUsers(data);
-    }
-//eslint-disable-next-line
-  }, [isFetched])
+function App(props: any) {
+  const data = usePreloadedQuery(USERS_RELAY_QUERY, props.preloadedQuery);
 
   return (
-    <div className='container-home'>
-      {isFetched && users.map((user) => {
-        return (
-          <UserCard user={user}/>
-        );
-      }) }
+    <div className='App'>
+      {data.users.map((user: User) => {
+        return <UserCard user={user}></UserCard>;
+      })}
     </div>
   );
 }
 
-export default Home;
+function AppRoot(props: any) {
+  return (
+    <RelayEnvironmentProvider environment={RelayEnvironment}>
+      <Suspense fallback={'Loading...'}>
+        <App preloadedQuery={preloadedQuery} />
+      </Suspense>
+    </RelayEnvironmentProvider>
+  );
+}
+export default AppRoot;
